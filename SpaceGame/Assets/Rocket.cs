@@ -17,7 +17,28 @@ public class Rocket : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        t += Time.deltaTime * moveSpeed;
+        t = Time.deltaTime * moveSpeed;
         transform.position = Vector3.Lerp(transform.position, rocketPos[currPosIndex], t);
+
+        if (Input.GetKeyDown(KeyCode.W))
+        {
+            currPosIndex = currPosIndex + 1;
+
+            if (currPosIndex > rocketPos.Length - 1)
+            {
+                currPosIndex = rocketPos.Length - 1;
+            }
+                
+        }
+
+        if (Input.GetKeyDown(KeyCode.S))
+        {
+            currPosIndex = currPosIndex - 1;
+
+            if(currPosIndex < 0)
+            {
+                currPosIndex = 0;
+            }
+        }
     }
 }
