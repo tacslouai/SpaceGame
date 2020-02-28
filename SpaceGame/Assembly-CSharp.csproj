@@ -58,6 +58,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Assets\Asteroid.cs" />
+    <Compile Include="Assets\AsteroidSpawner.cs" />
     <Compile Include="Assets\Rocket.cs" />
     <Reference Include="Unity.Timeline.Editor">
       <HintPath>C:/Users/lhammad/Desktop/Github/SpaceGame/SpaceGame/Library/ScriptAssemblies/Unity.Timeline.Editor.dll</HintPath>
