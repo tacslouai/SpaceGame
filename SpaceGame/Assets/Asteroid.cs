@@ -4,18 +4,20 @@ using UnityEngine;
 
 public class Asteroid : MonoBehaviour
 {
-    public float moveSpeed = 7;
-    public Vector3 endPos;
-
-    // Start is called before the first frame update
-    void Start()
-    {
-        endPos = new Vector3(-30, transform.position.y, 0);
-    }
+    public float moveSpeed = 5;
 
     // Update is called once per frame
     void Update()
     {
-        transform.position = Vector3.Lerp(transform.position, endPos, Time.deltaTime * moveSpeed);
+        // Moves asteroid to the left
+        transform.position = new Vector3(   transform.position.x - Time.deltaTime * moveSpeed,
+                                            transform.position.y,
+                                            transform.position.z);
+
+        // Destroys asteroid if it goes too far off screen
+        if (transform.position.x < -30)
+        {
+            Destroy(gameObject);
+        }
     }
 }

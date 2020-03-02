@@ -23,18 +23,15 @@ public class Rocket : MonoBehaviour
         if (Input.GetKeyDown(KeyCode.W))
         {
             currPosIndex = currPosIndex + 1;
-
-            if (currPosIndex > rocketPos.Length - 1)
+            if(currPosIndex > rocketPos.Length - 1)
             {
                 currPosIndex = rocketPos.Length - 1;
             }
-                
         }
 
         if (Input.GetKeyDown(KeyCode.S))
         {
             currPosIndex = currPosIndex - 1;
-
             if(currPosIndex < 0)
             {
                 currPosIndex = 0;
