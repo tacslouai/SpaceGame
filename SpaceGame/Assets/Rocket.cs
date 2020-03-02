@@ -4,6 +4,16 @@ using UnityEngine;
 
 public class Rocket : MonoBehaviour
 {
+    public bool isAlive = true;
+    public bool isFlinching = false;
+    public int hp = 3;
+    public int score = 0;
+    public float flinchDur = 5;
+    public float ft = 0;
+    public SpriteRenderer s;
+    public Color flinchColor = new Color(0.5f, 0, 0, 0);
+
+
     public Vector3[] rocketPos;
     public int currPosIndex = 1;
     public float t = 0;
@@ -11,6 +21,36 @@ public class Rocket : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
+        s = GetComponent<SpriteRenderer>();
+    }
+
+    void KillPlayer()
+    {
+        s.enabled = false;
+    }
+
+    void OnTriggerEnter2D(Collider2D collision)
+    {
+        if(collision.gameObject.name == "Asteroid")
+        {
+            hp = hp - 1;
+            isFlinching = true;
+            if(hp < 0)
+            {
+                isAlive = false;
+            }
+        }
+        
+        if(collision.gameObject.name == "Points")
+        {
+            score = score + 1;
+        }
+        
+        if (!isAlive)
+        {
+            KillPlayer();
+        }
+
         
     }
 
