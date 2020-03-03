@@ -1,9 +1,12 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-
+using TMPro;
 public class Rocket : MonoBehaviour
 {
+    public TextMeshProUGUI health;
+    public TextMeshProUGUI points;
+
     public bool isAlive = true;
     public bool isFlinching = false;
     public int hp = 3;
@@ -22,6 +25,8 @@ public class Rocket : MonoBehaviour
     void Start()
     {
         s = GetComponent<SpriteRenderer>();
+        health.text = "HP: " + hp;
+        points.text = "Score: " + score;
     }
 
     void KillPlayer()
@@ -37,13 +42,17 @@ public class Rocket : MonoBehaviour
             isFlinching = true;
             if(hp < 0)
             {
+                hp = 0;
                 isAlive = false;
             }
+
+            health.text = "HP: " + hp;
         }
         
-        if(collision.gameObject.name == "Points")
+        if(collision.gameObject.name == "Points" && !isFlinching && isAlive)
         {
             score = score + 1;
+            points.text = "Score: " + score;
         }
         
         if (!isAlive)
@@ -57,6 +66,18 @@ public class Rocket : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
+        if(isFlinching && ft <= flinchDur)
+        {
+            ft += Time.deltaTime;
+            s.color = Color.Lerp(Color.white, flinchColor, Mathf.PingPong(ft, 0.5f));
+        }
+        
+        else if(ft > flinchDur)
+        {
+            ft = 0;
+            isFlinching = false;
+        }
+
         t = Time.deltaTime * moveSpeed;
         transform.position = Vector3.Lerp(transform.position, rocketPos[currPosIndex], t);
 
