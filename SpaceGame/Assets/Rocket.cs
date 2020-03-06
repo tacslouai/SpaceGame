@@ -39,7 +39,18 @@ public class Rocket : MonoBehaviour
         if(collision.gameObject.name == "Asteroid")
         {
             hp = hp - 1;
-            isFlinching = true;
+            if (!isFlinching)
+            {
+                isFlinching = true;
+            }
+            if (isFlinching)
+            {
+                hp = hp;
+            }
+            else
+            {
+                hp = hp - 1;
+            }
             if(hp < 0)
             {
                 hp = 0;
