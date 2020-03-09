@@ -10,9 +10,7 @@ public class Asteroid : MonoBehaviour
     void Update()
     {
         // Moves asteroid to the left
-        transform.position = new Vector3(   transform.position.x - Time.deltaTime * moveSpeed,
-                                            transform.position.y,
-                                            transform.position.z);
+        transform.position = new Vector3(transform.position.x - Time.deltaTime * moveSpeed, transform.position.y, transform.position.z);
 
         // Destroys asteroid if it goes too far off screen
         if (transform.position.x < -30)

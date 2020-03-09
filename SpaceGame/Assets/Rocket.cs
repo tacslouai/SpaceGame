@@ -21,9 +21,17 @@ public class Rocket : MonoBehaviour
     public int currPosIndex = 1;
     public float t = 0;
     public float moveSpeed = 7;
+
+
+    public new AudioSource audio;
+    public AudioClip hit;
+    public AudioClip point;
+    public AudioClip lose;
+
     // Start is called before the first frame update
     void Start()
     {
+        audio = GetComponent<AudioSource>();
         s = GetComponent<SpriteRenderer>();
         health.text = "HP: " + hp;
         points.text = "Score: " + score;
@@ -36,25 +44,20 @@ public class Rocket : MonoBehaviour
 
     void OnTriggerEnter2D(Collider2D collision)
     {
-        if(collision.gameObject.name == "Asteroid")
+        if(collision.gameObject.name == "Asteroid" && !isFlinching && isAlive)
         {
+            audio.PlayOneShot(hit);
             hp = hp - 1;
             if (!isFlinching)
             {
                 isFlinching = true;
             }
-            if (isFlinching)
-            {
-                hp = hp;
-            }
-            else
-            {
-                hp = hp - 1;
-            }
+            
             if(hp < 0)
             {
                 hp = 0;
                 isAlive = false;
+                audio.PlayOneShot(lose);
             }
 
             health.text = "HP: " + hp;
@@ -64,6 +67,7 @@ public class Rocket : MonoBehaviour
         {
             score = score + 1;
             points.text = "Score: " + score;
+            audio.PlayOneShot(point);
         }
         
         if (!isAlive)
@@ -90,7 +94,7 @@ public class Rocket : MonoBehaviour
         }
 
         t = Time.deltaTime * moveSpeed;
-        transform.position = Vector3.Lerp(transform.position, rocketPos[currPosIndex], t);
+        transform.position = new Vector3(rocketPos[currPosIndex].x, rocketPos[currPosIndex].y, rocketPos[currPosIndex].z);
 
         if (Input.GetKeyDown(KeyCode.W))
         {
